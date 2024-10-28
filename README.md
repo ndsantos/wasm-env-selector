@@ -45,4 +45,4 @@ This project demonstrates how to configure environment selection in a Blazor Web
 
 ## Additional Information
 
-For further details on the implementation, see our [blog post](link-to-your-post) for code examples and an explanation of the environment handling strategy in WASM static applications.
+For further details on the implementation, see our [blog post](https://medium.com/@n.d.santos/configuring-environment-selection-in-a-wasm-static-app-2cc8fbddf4a4) for code examples and an explanation of the environment handling strategy in WASM static applications.
