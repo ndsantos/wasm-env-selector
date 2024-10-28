@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+@using EnvSelector.Client.Storage;
+@using EnvSelector.Client.Service;
+@inject StorageHandler StorageHandler;
+@inject ServiceConfig ServiceConfig;
+
+<div class="page">
+    <div class="@SideBarCSSClass">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+
+@code {
+    private string SideBarCSSClass { get; set; } = "sidebar";
+
+    protected override async Task OnInitializedAsync()
+    {
+        ServiceEnvironment environment = await StorageHandler.GetEnvironment();
+        if(ServiceConfig.Environment == null) {
+            ServiceConfig.Environment = environment;
+        }
+
+        SideBarCSSClass = $"sidebar-{environment.ToString().ToLower()}";
+
+    }
+}

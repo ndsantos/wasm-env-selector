@@ -1,0 +1,34 @@
+@page "/config"
+@using EnvSelector.Client.Service;
+@using EnvSelector.Client.Storage;
+
+@inject StorageHandler StorageHandler;
+@inject JSService JSService;
+
+<h3>Configuration</h3>
+<label>Select Backend Environment:</label>
+<select @bind="selectedApiHost" @bind:after="SetApiHostAsync">
+
+    @foreach(ServiceEnvironment environment in ServiceEnvironment.All){
+        <option value="@environment">@environment</option>
+    }
+   
+</select>
+
+@code {
+    private ServiceEnvironment? selectedApiHost;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Retrieve the saved environment on initialization
+        selectedApiHost = await StorageHandler.GetEnvironment();
+    }
+
+    private async Task SetApiHostAsync()
+    {
+        // Save the selected environment to localStorage
+        await StorageHandler.SetEnvironment(selectedApiHost!);
+        await JSService.Reload();
+    }
+}    
+    
